@@ -1,0 +1,21 @@
+{%extends 'store/base.html'%}
+
+{%block main_block%}
+
+
+                <h3 class="fs-4 fw-bold text-blue-600">Add Your Address</h3>
+               <form action="" method="post" class="text-black ">
+                  {%csrf_token%}
+                  {{form}}
+
+
+         
+                 <button type="submit" class="mt-2 btn btn-warning align-items-center text-black">Place Order</button>
+               
+
+
+           
+            </form>
+           
+ 
+{%endblock%}
