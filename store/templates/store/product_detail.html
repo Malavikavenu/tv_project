@@ -6,18 +6,34 @@
 
 
 
+
+
+
 <section class="overflow-hidden">
     <div class="mx-auto max-w-5xl px-5 py-24">
-      <div class="mx-auto flex flex-wrap items-center lg:w-4/5 bg-white text-black p-3 shadow p-3 mb-5 bg-white rounded">
-        <img src="{{ product.image.url}}" alt="" class="w-1/2 rounded object-cover">
+      
 
+      <div class="mx-auto flex flex-wrap items-center lg:w-4/5 bg-white text-black p-3 shadow p-3 mb-5 bg-white rounded">
+       
+        <img src="{{ product.image.url}}" alt="" class="w-1/2 rounded object-cover">
+        
 
        
         <div class="mt-6 w-full lg:mt-0 lg:w-1/2 lg:pl-10">
           <h2 class="text-sm font-semibold tracking-widest text-gray-500">
-            TV Details....
+          
           </h2>
-          <h1 class="my-4 text-3xl font-semibold text-black">{{product.brand}}</h1>
+          <h1 class="my-4 text-3xl font-semibold text-black">{{product.brand}} </h1>
+          
+          {%for t in product.tag_objects.all%}
+
+          <span class="mb-2 mr-1 inline-block rounded-full bg-gray-100 px-3 py-1 text-[10px] font-semibold text-gray-900">
+            {{t}}
+          </span>
+        
+
+
+          {%endfor%}
           <div class="my-4 flex items-center">
             <span class="flex items-center space-x-1">
               <svg
@@ -99,29 +115,64 @@
             {{product.description}}
           </p>
         
-          <div class="flex items-center justify-between">
-            <span class="title-font text-xl font-bold text-gray-900">
-              {{product.price}}
-            </span>
+    
+          <div>
+            
+             
+        
+            
+            <form class="d-flex justify-content-left" method="post" action="">
+              {%csrf_token%}
+              <span class="title-font text-xl font-bold text-gray-900 mr-2 mt-5">
+                {{product.price}}
 
-            <form class="d-flex justify-content-left">
-              <!-- Default input -->
-              <div class="form-outline me-1" style="width: 100px;">
-                  <input type="number" value="1" class="form-control" />
-              </div>
+             
+              </span>
 
-            <a href="{%url 'add-cart' product.id%}"
-              type="button"
-              class="rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
-            >
-              Add to Cart
-            </a>
-          </div>
-        </div>
+         
+
+               
+            
+               
+          
+
+              
+          
+               <div class="right ml-5 mt-5" style="margin-left: 50px;">
+             
+             
+               
+                <span class="" style="position: absolute;">
+                  {%if product.stock > 0 %}
+                  <a href="{%url 'add-cart' product.id%}"  type="button" class="btn btn-success">Add to Cart</a>
+                
+                  <h2 class="text-success float-end ml-5 text-2x1 " style="font-size: medium;">In stock</h2>
+                
+                {%else%}
+                <a href="{%url 'index' %}"  type="button" class="btn btn-secondary">Go to Home</a>
+                  <h2 class="text-danger">Out of stock</h2>
+                
+                {%endif%}
+                
+                   
+                 </span>
+        
+            
+               </div>
+         
+       
+        </form>
       </div>
     </div>
   </section>
-  
+         <!--Quantity-->
+
+      
+      
+
+
+
+
 
 
 

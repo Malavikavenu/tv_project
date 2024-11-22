@@ -1,45 +1,70 @@
 {%extends 'store/base.html'%}
+{%load static%}
+{% load custom_filters %}
 
 
 
 {%block main_block%}
+  
+ 
 
-
-<div class="mx-auto flex max-w-3xl flex-col space-y-4 p-6 px-2 sm:p-10 sm:px-2 ">
-  {%if cartitems%}
-  <h2 class="text-3xl font-bold">Your Favorites...</h2>
-  <p class="mt-3 text-sm font-medium text-gray-700">
-
-  </p>
- <div class="bg-blue-300 p-3 shadow p-3 mb-5 bg-blue-300 rounded">
-
+<div class="mx-auto flex max-w-3xl flex-col space-y-4 p-6 px-2 sm:p-10 sm:px-2">
+    {%if cartitems%}
+    <h1 class="text-3xl font-bold">Your Cart</h1>
+    <h2>{{items}}items</h2>
+    <p class="mt-3 text-sm font-medium text-gray-700">
+  
+    </p>
     <ul class="flex flex-col divide-y divide-gray-200">
-
+  
         {%for ci in cartitems%}
         <li class="flex flex-col py-6 sm:flex-row sm:justify-between">
             <div class="flex w-full space-x-2 sm:space-x-4">
-              <img src="{{ ci.product_object.image.url}}" alt="" class="w-1/2 rounded object-cover">
+            
   
-              
-              <div class="flex w-full flex-col justify-between pb-4 ">
+            <img src="{{ ci.product_object.image.url}}" alt="" class="w-1/2 rounded object-cover">
+              <div class="flex w-full flex-col justify-between pb-4">
                 <div class="flex w-full justify-between space-x-2 pb-2">
                   <div class="space-y-1">
-                    <h3 class="text-lg font-semibold leading-snug sm:pr-8 text-blue-900">
-                      {{ci.product_object.brand}}
+                    <h3 class="text-lg font-semibold leading-snug sm:pr-8">
+                      {{ci.product_object.name}}
                     </h3>
   
-                    {%for t in ci.product_object.tag_objects.all%}
-  
-                    <span class="border-r-2 border-gray-500 px-2 me-1 text-sm text-blue-900 my-2">{{t}}</span>
-  
-                    {%endfor%}
+                  
                     <p class="text-sm"></p>
                   </div>
+                  <form action="{%url 'cart-update' ci.id%}" method="post">
+                    {%csrf_token%}
+
+                    <div>
+                      Quantity:
+                      <button type="submit" name="update" value="decrease" min="1" class="btn btn-primary">-</button>
+                     
+  
+                      <span>{{ci.quantity}}</span>
+  
+                      
+                      <button type="submit" name="update" value="increase" max="10" class="btn btn-primary">+</button>
+                    </div>
+
+                   
+                   
+                  </form>
                   <div class="text-right">
-                    <p class="text-lg font-semibold text-blue-900">{{ci.product_object.price}}</p>
+                    <p class="text-lg font-semibold">      
+                      {{ci.updated_price}}    
+                 
+                
+            </p>
+           
                   </div>
                 </div>
-                <div class="flex divide-x text-sm text-blue-900">
+                <div class="flex divide-x text-sm">
+                  <p>  {%for t in ci.product_object.tag_objects.all%}
+  
+                    <span class="border-r-2 border-gray-500 px-2 me-1 text-sm text-black-500 my-1">{{t}}</span>
+      
+                    {%endfor%}</p>
                   <a href="{%url 'cartitem-delete' ci.id%}"
                     type="button"
                     class="flex items-center space-x-2 px-2 py-1 pl-0"
@@ -83,45 +108,85 @@
               </div>
             </div>
           </li>
-  
-  
-        {%endfor%}
-    
+          {%endfor%}
      
     </ul>
   
     <div class="space-y-1 text-right">
         <p>
           Total amount:<span class="font-semibold"> ₹{{total}}</span>
+          
         </p>
       </div>
       <div class="flex justify-end space-x-4">
         <a href="{%url 'index'%}"
           type="button"
-          class="rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-black shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+          class="rounded-md border border-black px-3 py-2 text-sm font-semibold text-black shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
         >
           Back to shop
         </a>
-        <a href="{%url 'address-add'%}" 
+        <a href="{%url 'checkout'%}"
           type="button"
-          class="rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+          class="rounded-md border border-black px-3 py-2 text-sm font-semibold text-black shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
         >
-          delivery address
+          Delivery Address
         </a>
       </div>
-  
+
       {%else%}
-      <h1 class="mt-2 text-3xl font-bold tracking-tight text-black sm:text-5xl text-center">Empty!</h1>
+      <h1 class="mt-2 text-3xl font-bold tracking-tight text-black sm:text-5xl text-center">
+
+
+
+        <div class="container-fluid  mt-100" style=" 
+    font-family: 'Calibri', sans-serif !important; ;">
+          <div class="row">
+          
+           <div class="col-md-12">
+           
+               <div class="card" style="  margin-bottom: 30px;
+               border: 0;
+               -webkit-transition: all .3s ease;
+               transition: all .3s ease;
+               letter-spacing: .5px;
+               border-radius: 8px;
+               -webkit-box-shadow: 1px 5px 24px 0 rgba(68,102,242,.05);
+               box-shadow: 1px 5px 24px 0 rgba(68,102,242,.05);">
+        
+             <div class="card-body cart" style="  padding: 30px;
+    background-color: transparent;">
+                 <div class="col-sm-12 empty-cart-cls text-center">
+                  <center> <img src="{%static 'images/empty-cart.png'%}" width="130" height="130" class="img-fluid mb-4 mr-3 items-center"></center>
+                   <h2><strong>Your Cart is Empty!</strong></h2>
+                   <p class="text-sm">Add items to it now.</p>
+                   <a href="{%url 'index'%}" class="btn btn-primary cart-btn-transform m-3" data-abc="true">continue shopping</a>
+                   
+                 
+                 </div>
+             </div>
+         </div>
+             
+           
+           </div>
+          
+          </div>
+         
+         </div>
+
+
+
+
+      
+      </h1>
       {%endif%}
+  
+
+   
+
+  
     
-       
-     
-  </div>
- </div>
   
 
 {%endblock%}
-
-
 
 

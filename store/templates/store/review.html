@@ -1,0 +1,17 @@
+{%extends 'store/base.html'%}
+
+{%block main_block%}
+
+<div class="container d-flex justify-content-center align-items-center">
+    
+<form action="" method="post" enctype="multipart/form-data" class="border w-1/4 mx-auto p-5 mt-5">
+
+    {%csrf_token%}
+
+    {{form}}
+    <button type="submit" class="btn btn-lg btn-success mt-2">Add</button>
+</form>
+
+</div>
+
+{%endblock%}

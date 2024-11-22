@@ -1,21 +1,39 @@
 {%extends 'store/base.html'%}
+{%load static%}
 
 {%block main_block%}
 
 
-                <h3 class="fs-4 fw-bold text-blue-600">Add Your Address</h3>
-               <form action="" method="post" class="text-black ">
-                  {%csrf_token%}
-                  {{form}}
+<h3 class="fw-bold fs-1 text-center mx-auto text-white mt-5 ">Add Your Address!</h3>     
 
+  <div class="container d-flex justify-content-center align-items-center" style="height:80vh;">
 
+    <div class="card mb-3  mb-2 bg-transparent text-dark" style="max-width:75%;">
+        <div class="row g-0">
          
-                 <button type="submit" class="mt-2 btn btn-warning align-items-center text-black">Place Order</button>
-               
-
-
-           
+          <div class="col-md-8" >
+            <div class="card-body">
+                
+            <form action="" method="post">
+                {%csrf_token%}
+                {{form}}
+                <button type="submit" class="btn btn-success mt-2">Place Order</button>
+                
             </form>
+           
+            </div>
+          </div>
+          <div class="col-md-4">
+            <img src="{%static 'images/lo.PNG'%}" class="rounded-start w-100 h-100" alt="...">
+          </div>
+        </div>
+      </div>
+</div>
+
+
            
  
 {%endblock%}
+
+
+

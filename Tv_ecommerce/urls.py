@@ -33,17 +33,37 @@ urlpatterns = [
 
     path("product/<int:pk>/",views.ProductDetailView.as_view(),name="product-detail"),
 
+    path('profile/<int:pk>/change/',views.UserProfileUpdateView.as_view(),name="profile-update"),
+
+
     path("product/<int:pk>/cart/add/",views.AddToCartView.as_view(),name="add-cart"),
 
     path("cart/summary/",views.MyCartView.as_view(),name="my-cart"),
 
     path("cartitem/<int:pk>/remove/",views.CartItemDeleteView.as_view(),name="cartitem-delete"),
 
-    path("address/add/",views.AddressAddView.as_view(),name="address-add"),
-
+    
     path("checkout/",views.CheckOutView.as_view(),name="checkout"),
 
     path("payment/verify/",views.PaymentVerificationView.as_view(),name="payment-verify"),
+
+    path('order/summary/',views.MyPurchaseView.as_view(),name="order-summary"),
+
+    path('product/<int:pk>/review/add/',views.ReviewCreateView.as_view(),name="review-add"),
+
+    path("cart/item/<int:pk>/update",views.QuantityUpdateView.as_view(),name="cart-update"),
+    
+
+    
+    
+ 
+    
+   
+  
+
+
+    
+
     
 
     
